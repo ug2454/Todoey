@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:todoey_flutter/screens/add_task_screen.dart';
+import 'package:todoey_flutter/widgets/tasks_list.dart';
 
 class TasksScreen extends StatefulWidget {
   @override
@@ -12,7 +14,19 @@ class _TasksScreenState extends State<TasksScreen> {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (context) => SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: AddTaskList(),
+              ),
+            ),
+          );
+        },
         child: Icon(Icons.add),
       ),
       body: SafeArea(
@@ -23,6 +37,7 @@ class _TasksScreenState extends State<TasksScreen> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 40.0, vertical: 70.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
                     backgroundColor: Colors.white,
@@ -59,14 +74,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     topRight: Radius.circular(30.0),
                   ),
                 ),
-                child: CheckboxListTile(
-                  value: timeDilation != 0.3,
-                  onChanged: (value) {
-                    setState(() {
-                      timeDilation = value ? 10.0 : 1.0;
-                    });
-                  },
-                ),
+                child: TasksList(),
               ),
             ),
           ],
