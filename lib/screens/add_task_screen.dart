@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/models/task.dart';
 
 class AddTaskList extends StatelessWidget {
+  final List addTask;
+
+  const AddTaskList({this.addTask});
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController textcontroller = TextEditingController();
     return Container(
       color: Color(0xFF757575),
       child: Container(
@@ -16,7 +22,6 @@ class AddTaskList extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-
           children: [
             Text(
               'Add Task',
@@ -24,6 +29,7 @@ class AddTaskList extends StatelessWidget {
               style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30.0),
             ),
             TextField(
+              controller: textcontroller,
               autofocus: true,
               cursorColor: Colors.lightBlueAccent,
               decoration: InputDecoration(
@@ -46,7 +52,10 @@ class AddTaskList extends StatelessWidget {
             ),
             FlatButton(
               color: Colors.lightBlueAccent,
-              onPressed: () {},
+              onPressed: () {
+                addTask.add(Task(task: textcontroller.text));
+                print(addTask);
+              },
               child: Text(
                 'Add',
                 style: TextStyle(color: Colors.white),

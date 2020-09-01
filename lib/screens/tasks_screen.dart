@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/models/task.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
+class TasksScreen extends StatelessWidget {
+  final List<Task> taskList;
 
-class _TasksScreenState extends State<TasksScreen> {
+  const TasksScreen({Key key, this.taskList}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,9 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskList(),
+                child: AddTaskList(
+                  addTask: taskList,
+                ),
               ),
             ),
           );
@@ -74,7 +76,9 @@ class _TasksScreenState extends State<TasksScreen> {
                     topRight: Radius.circular(30.0),
                   ),
                 ),
-                child: TasksList(),
+                child: TasksList(
+                  taskList: taskList,
+                ),
               ),
             ),
           ],
