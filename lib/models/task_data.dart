@@ -6,6 +6,19 @@ import 'package:todoey_flutter/models/task.dart';
 class Data extends ChangeNotifier {
   bool isCompleted = false;
 
+  int index;
+
+  int get getIndex => index;
+
+  bool isDelete = false;
+
+  void toggleDelete() {
+    isDelete = !isDelete;
+    notifyListeners();
+  }
+
+  bool get delValue => isDelete;
+
   List<Task> _taskList = [
     Task(task: 'Buy milk'),
     Task(task: 'Buy eggs'),
@@ -30,4 +43,8 @@ class Data extends ChangeNotifier {
   }
 
   UnmodifiableListView<Task> get taskList => UnmodifiableListView(_taskList);
+
+  void setIndex(int dex) {
+    index = dex;
+  }
 }

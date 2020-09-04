@@ -9,7 +9,29 @@ import 'package:todoey_flutter/widgets/tasks_list.dart';
 class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final snackBar = SnackBar(content: Text('Yay! A SnackBar!'));
     return Scaffold(
+      appBar: Provider.of<Data>(context, listen: false).delValue
+          ? AppBar(
+              backgroundColor: Colors.blue.shade900,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 40.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      final data = Provider.of<Data>(context, listen: false);
+
+                      int index = data.getIndex;
+                      data.deleteTask(data.taskList[index]);
+                      data.toggleDelete();
+                      // Scaffold.of(context).showSnackBar(snackBar);
+                    },
+                    child: Icon(Icons.delete),
+                  ),
+                )
+              ],
+            )
+          : null,
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
         onPressed: () {

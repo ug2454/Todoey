@@ -17,16 +17,9 @@ class TasksList extends StatelessWidget {
             final task = value.taskList[index];
             return GestureDetector(
               onLongPressStart: (details) {
-                value.deleteTask(task);
-                Scaffold.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor: Colors.lightBlueAccent,
-                    content: Text(
-                      'Item is deleted!',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                );
+                value.toggleDelete();
+                value.setIndex(index);
+                print(index);
               },
               child: TasksTile(
                   task: task.task,
