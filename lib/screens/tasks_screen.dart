@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey_flutter/models/task.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 
@@ -10,11 +12,6 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  final List<Task> taskList = [
-    Task(task: 'Buy milk'),
-    Task(task: 'Buy eggs'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +29,9 @@ class _TasksScreenState extends State<TasksScreen> {
                   addToList: (title) {
                     print(title);
                     setState(() {
-                      taskList.add(Task(task: title));
+                      Provider.of<Data>(context)
+                          .taskList
+                          .add(Task(task: title));
                       Navigator.pop(context);
                     });
                   },
@@ -73,7 +72,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '12 Tasks',
+                    '${Provider.of<Data>(context).taskList.length} Tasks',
                     style: TextStyle(color: Colors.white),
                   ),
                 ],
@@ -88,9 +87,7 @@ class _TasksScreenState extends State<TasksScreen> {
                     topRight: Radius.circular(30.0),
                   ),
                 ),
-                child: TasksList(
-                  taskList: taskList,
-                ),
+                child: TasksList(),
               ),
             ),
           ],
