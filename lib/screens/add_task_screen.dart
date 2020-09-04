@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey_flutter/models/task.dart';
+import 'package:todoey_flutter/models/task_data.dart';
 
 class AddTaskList extends StatelessWidget {
-  final Function addToList;
-  const AddTaskList({this.addToList});
-
   @override
   Widget build(BuildContext context) {
     TextEditingController textcontroller = TextEditingController();
@@ -52,7 +51,9 @@ class AddTaskList extends StatelessWidget {
             FlatButton(
               color: Colors.lightBlueAccent,
               onPressed: () {
-                addToList(textcontroller.text);
+                Provider.of<Data>(context, listen: false)
+                    .addTask(textcontroller.text);
+                Navigator.pop(context);
               },
               child: Text(
                 'Add',
