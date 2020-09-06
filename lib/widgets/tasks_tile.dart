@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoey_flutter/constants.dart';
 import 'package:todoey_flutter/models/task.dart';
 
 class TasksTile extends StatelessWidget {
@@ -14,11 +15,12 @@ class TasksTile extends StatelessWidget {
       title: Text(
         task,
         style: TextStyle(
+            color: isChecked ? Colors.grey : Colors.black,
             decoration:
                 isChecked ? TextDecoration.lineThrough : TextDecoration.none),
       ),
       trailing: Checkbox(
-        activeColor: Colors.lightBlueAccent,
+        activeColor: kThemeColor,
         value: isChecked,
         onChanged: checkboxCallback,
       ),

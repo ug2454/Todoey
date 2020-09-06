@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => Data(),
       child: MaterialApp(
+        theme: ThemeData(fontFamily: 'Poppins'),
         home: TasksScreen(),
       ),
     );

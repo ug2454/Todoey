@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todoey_flutter/constants.dart';
 import 'package:todoey_flutter/models/task.dart';
 import 'package:todoey_flutter/models/task_data.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
@@ -10,32 +11,27 @@ class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Provider.of<Data>(context, listen: false).delValue
-          ? AppBar(
-              backgroundColor: Colors.blue.shade900,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 40.0),
-                  child: Builder(
-                    builder: (context) => GestureDetector(
-                      onTap: () {
-                        final data = Provider.of<Data>(context, listen: false);
-
-                        int index = data.getIndex;
-                        data.deleteTask(data.taskList[index]);
-                        data.toggleDelete();
-                        Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text('Item is deleted !')));
-                      },
-                      child: Icon(Icons.delete),
-                    ),
-                  ),
-                )
-              ],
-            )
-          : null,
-      backgroundColor: Colors.lightBlueAccent,
+      appBar: PreferredSize(
+        preferredSize: Size(MediaQuery.of(context).size.width, 100.0),
+        child: AppBar(
+          title: Column(
+            children: [
+              Text(
+                'Sunday, 6th',
+                style: TextStyle(color: Color(0xFF6C6EFA), fontSize: 20.0),
+              ),
+              Text(
+                'September',
+                style: TextStyle(color: Color(0xFF6C6EFA), fontSize: 20.0),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.white,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: kThemeColor,
         onPressed: () {
           showModalBottomSheet(
             context: context,
@@ -55,46 +51,10 @@ class TasksScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 40.0, vertical: 70.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 30.0,
-                    child: Icon(
-                      Icons.list,
-                      size: 40.0,
-                      color: Colors.lightBlueAccent,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Text(
-                    'Todoey',
-                    style: TextStyle(
-                        fontSize: 30.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '${Provider.of<Data>(context).taskListLength} Tasks',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
-                  ),
                 ),
                 child: TasksList(),
               ),
