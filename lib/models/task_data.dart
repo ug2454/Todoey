@@ -22,13 +22,16 @@ class Data extends ChangeNotifier {
   List<Task> _taskList = [
     Task(task: 'Buy milk'),
     Task(task: 'Buy eggs'),
-    Task(task: 'Buy bread'),
+    Task(
+      task: 'Buy bread',
+    ),
   ];
 
   int get taskListLength => _taskList.length;
 
-  void addTask(String newTask) {
-    _taskList.add(Task(task: newTask));
+  void addTask(String newTask, time) {
+    print(newTask);
+    _taskList.add(Task(task: newTask, time: time));
     notifyListeners();
   }
 

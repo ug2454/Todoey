@@ -40,6 +40,7 @@ class TasksList extends StatelessWidget {
               },
               child: TasksTile(
                   task: task.task,
+                  time:task.time,
                   isChecked: task.isCompleted,
                   checkboxCallback: (checkboxState) {
                     value.toggle(task);

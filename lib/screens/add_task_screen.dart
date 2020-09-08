@@ -10,6 +10,9 @@ class AddTaskList extends StatefulWidget {
 class _AddTaskListState extends State<AddTaskList> {
   TimeOfDay _time;
   bool isMinSingle = false;
+  String tasktitle;
+  bool isAm = false;
+  bool isTwelve = false;
 
   MaterialColor _buttonTextColor = MaterialColor(0xFFF36364, <int, Color>{
     50: Color(0xFFF36364),
@@ -53,7 +56,10 @@ class _AddTaskListState extends State<AddTaskList> {
               style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30.0),
             ),
             TextField(
-              controller: textcontroller,
+              // controller: textcontroller,
+              onChanged: (value) {
+                tasktitle = value;
+              },
               autofocus: true,
               cursorColor: Colors.lightBlueAccent,
               decoration: InputDecoration(
@@ -101,17 +107,29 @@ class _AddTaskListState extends State<AddTaskList> {
                         dynamic minutes = time.minute;
 
                         print(minutes);
-                        if (minutes >= 1 && minutes <= 9) {
+                        if (minutes >= 0 && minutes <= 9) {
                           isMinSingle = true;
                         } else
                           isMinSingle = false;
+                        print(time.hour);
+                        if (time.hour >= 0 && time.hour < 12) {
+                          isAm = true;
+                        } else
+                          isAm = false;
 
-                        _time = time.replacing(hour: time.hourOfPeriod);
+                        if (time.hour == 0 || time.hour == 12) {
+                          isTwelve = true;
+                        } else
+                          isTwelve = false;
+                        _time = time.replacing(
+                            hour: isTwelve ? 12 : time.hourOfPeriod);
                       });
                     }
                   },
                   child: isMinSingle
-                      ? Text('${_time.hour}:0${_time.minute}')
+                      ? Text(
+                          '${_time.hour}:0${_time.minute}',
+                        )
                       : Text('${_time.hour}:${_time.minute}'),
                 ),
               ],
@@ -119,8 +137,13 @@ class _AddTaskListState extends State<AddTaskList> {
             FlatButton(
               color: Colors.lightBlueAccent,
               onPressed: () {
-                Provider.of<Data>(context, listen: false)
-                    .addTask(textcontroller.text);
+                Provider.of<Data>(context, listen: false).addTask(
+                    tasktitle,
+                    isMinSingle
+                        ? Text(
+                            '${_time.hour}:0${_time.minute} ${isAm ? "AM" : "PM"}')
+                        : Text(
+                            '${_time.hour}:${_time.minute} ${isAm ? "AM" : "PM"}'));
                 Navigator.pop(context);
               },
               child: Text(

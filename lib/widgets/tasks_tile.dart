@@ -6,8 +6,10 @@ class TasksTile extends StatelessWidget {
   final bool isChecked;
   final String task;
   final checkboxCallback;
+  final time;
 
-  const TasksTile({this.isChecked, this.task, this.checkboxCallback});
+  const TasksTile(
+      {this.isChecked, this.task, this.checkboxCallback, this.time});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class TasksTile extends StatelessWidget {
           ),
         ],
       ),
-      trailing: Text('${DateTime.now().hour}:${DateTime.now().second}'),
+      trailing: time,
     );
   }
 }
