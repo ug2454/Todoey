@@ -1,9 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todoey_flutter/models/task.dart';
 import 'package:todoey_flutter/models/task_data.dart';
 
-class AddTaskList extends StatelessWidget {
+class AddTaskList extends StatefulWidget {
+  @override
+  _AddTaskListState createState() => _AddTaskListState();
+}
+
+class _AddTaskListState extends State<AddTaskList> {
+  TimeOfDay _time;
+  bool isMinSingle = false;
+
+  MaterialColor _buttonTextColor = MaterialColor(0xFFF36364, <int, Color>{
+    50: Color(0xFFF36364),
+    100: Color(0xFFF36364),
+    200: Color(0xFFF36364),
+    300: Color(0xFFF36364),
+    400: Color(0xFFF36364),
+    500: Color(0xFFF36364),
+    600: Color(0xFFF36364),
+    700: Color(0xFFF36364),
+    800: Color(0xFFF36364),
+    900: Color(0xFFF36364),
+  });
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _time = TimeOfDay.now();
+  }
+
   @override
   Widget build(BuildContext context) {
     TextEditingController textcontroller = TextEditingController();
@@ -47,6 +73,48 @@ class AddTaskList extends StatelessWidget {
             ),
             SizedBox(
               height: 20.0,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text('Select Time:'),
+                FlatButton(
+                  onPressed: () async {
+                    TimeOfDay time = await showTimePicker(
+                      context: context,
+                      initialTime: _time,
+                      builder: (context, child) {
+                        return Theme(
+                            data: ThemeData(
+                              primaryColor: Color(0xFFF36364),
+                              accentColor: Color(0xFFF36364),
+                              primarySwatch: _buttonTextColor,
+                            ),
+                            child: MediaQuery(
+                                data: MediaQuery.of(context)
+                                    .copyWith(alwaysUse24HourFormat: false),
+                                child: child));
+                      },
+                    );
+                    if (time != null) {
+                      setState(() {
+                        dynamic minutes = time.minute;
+
+                        print(minutes);
+                        if (minutes >= 1 && minutes <= 9) {
+                          isMinSingle = true;
+                        } else
+                          isMinSingle = false;
+
+                        _time = time.replacing(hour: time.hourOfPeriod);
+                      });
+                    }
+                  },
+                  child: isMinSingle
+                      ? Text('${_time.hour}:0${_time.minute}')
+                      : Text('${_time.hour}:${_time.minute}'),
+                ),
+              ],
             ),
             FlatButton(
               color: Colors.lightBlueAccent,

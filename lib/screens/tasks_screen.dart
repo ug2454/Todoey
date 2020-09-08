@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoey_flutter/constants.dart';
-import 'package:todoey_flutter/models/calc_time.dart';
-import 'package:todoey_flutter/models/task.dart';
 import 'package:todoey_flutter/models/task_data.dart';
 import 'package:todoey_flutter/screens/add_task_screen.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
@@ -14,15 +12,32 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  final time = CalcTime();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  final weekday = DateTime.now().weekday;
+  final month = DateTime.now().month;
 
-    CalcTime(dayNo: DateTime.now().weekday, monthNo: DateTime.now().month);
-    
-  }
+  var dayMap = {
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday'
+  };
+  var monthMap = {
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December',
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +83,7 @@ class _TasksScreenState extends State<TasksScreen> {
                             TextSpan(
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: '${time.day},',
+                                  text: '${dayMap[weekday]},',
                                   style: TextStyle(
                                       // color: Color(0xFF606AFA),
                                       fontWeight: FontWeight.bold,
@@ -97,7 +112,7 @@ class _TasksScreenState extends State<TasksScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            '${time.month}',
+                            '${monthMap[month]}',
                             style: TextStyle(
                                 color: Color(0xFFB7B8D2),
                                 fontWeight: FontWeight.bold),
