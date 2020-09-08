@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todoey_flutter/constants.dart';
 import 'package:todoey_flutter/models/task_data.dart';
 
 class AddTaskList extends StatefulWidget {
@@ -53,7 +54,10 @@ class _AddTaskListState extends State<AddTaskList> {
             Text(
               'Add Task',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.lightBlueAccent, fontSize: 30.0),
+              style: TextStyle(fontSize: 30.0, color: kThemeColor),
+            ),
+            SizedBox(
+              height: 30.0,
             ),
             TextField(
               // controller: textcontroller,
@@ -64,12 +68,10 @@ class _AddTaskListState extends State<AddTaskList> {
               cursorColor: Colors.lightBlueAccent,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.lightBlueAccent, width: 3.0),
+                  borderSide: BorderSide(color: kThemeColor, width: 3.0),
                 ),
                 focusedBorder: UnderlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.lightBlueAccent, width: 3.0),
+                  borderSide: BorderSide(color: kThemeColor, width: 3.0),
                 ),
                 border: UnderlineInputBorder(
                   borderSide:
@@ -78,12 +80,15 @@ class _AddTaskListState extends State<AddTaskList> {
               ),
             ),
             SizedBox(
-              height: 20.0,
+              height: 40.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('Select Time:'),
+                Text(
+                  'Select Time:',
+                  style: TextStyle(fontSize: 20.0, color: kThemeColor),
+                ),
                 FlatButton(
                   onPressed: () async {
                     TimeOfDay time = await showTimePicker(
@@ -121,8 +126,7 @@ class _AddTaskListState extends State<AddTaskList> {
                           isTwelve = true;
                         } else
                           isTwelve = false;
-                        _time = time.replacing(
-                            hour: isTwelve ? 12 : time.hourOfPeriod);
+                        _time = time.replacing(hour: isTwelve ? 12 : time.hour);
                       });
                     }
                   },
@@ -134,16 +138,23 @@ class _AddTaskListState extends State<AddTaskList> {
                 ),
               ],
             ),
+            SizedBox(
+              height: 30.0,
+            ),
             FlatButton(
-              color: Colors.lightBlueAccent,
+              color: kThemeColor,
               onPressed: () {
                 Provider.of<Data>(context, listen: false).addTask(
-                    tasktitle,
+                    tasktitle != null ? tasktitle : '',
                     isMinSingle
                         ? Text(
-                            '${_time.hour}:0${_time.minute} ${isAm ? "AM" : "PM"}')
+                            '${_time.hour}:0${_time.minute} ${isAm ? "AM" : "PM"}',
+                            style: kTimeStyle,
+                          )
                         : Text(
-                            '${_time.hour}:${_time.minute} ${isAm ? "AM" : "PM"}'));
+                            '${_time.hour}:${_time.minute} ${isAm ? "AM" : "PM"}',
+                            style: kTimeStyle,
+                          ));
                 Navigator.pop(context);
               },
               child: Text(
