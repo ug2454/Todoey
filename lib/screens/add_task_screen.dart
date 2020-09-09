@@ -106,7 +106,7 @@ class _AddTaskListState extends State<AddTaskList> {
                                     .copyWith(alwaysUse24HourFormat: false),
                                 child: child));
                       },
-                    );
+                 );
                     if (time != null) {
                       setState(() {
                         dynamic minutes = time.minute;
